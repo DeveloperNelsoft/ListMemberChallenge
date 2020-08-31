@@ -107,9 +107,8 @@ const CongressMemberDetail: React.SFC<Props> = (props: Props) => {
             .filter((val: any) => val[0] !== "tableData")
             .map((val: any, index: number) => (
               <Grid item xs={12} sm container>
-                <Grid item xs container direction="column" spacing={2}>
+                <Grid item xs container direction="column">
                   <strong>{`${val[0]} `}</strong>
-                  <Grid item xs></Grid>
                 </Grid>
                 <Grid item>
                   <div>{`${val[1] === null ? "No Information" : val[1]}`}</div>

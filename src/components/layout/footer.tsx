@@ -21,7 +21,7 @@ const Footer = () => {
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar position="fixed" color="transparent" className={classes.appBar}>
+      <AppBar position="fixed" color="secondary" className={classes.appBar}>
         <Toolbar>
           <div className={classes.grow} />
           <Typography variant="subtitle2" gutterBottom>

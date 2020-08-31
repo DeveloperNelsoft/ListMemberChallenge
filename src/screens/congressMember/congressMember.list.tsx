@@ -128,7 +128,7 @@ const CongressMemberList: React.SFC<CongressMemberListState> = () => {
                   </div>
                 ),
               },
-              { title: "state", field: "state" },
+              { title: "State", field: "state" },
               { title: "Role", field: "leadership_role" },
               {
                 title: "Action",
