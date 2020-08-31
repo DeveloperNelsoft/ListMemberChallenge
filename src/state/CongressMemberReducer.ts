@@ -13,11 +13,11 @@ type ActionMap<M extends { [index: string]: any }> = {
 };
 
 export enum Types {
-  Get = "GET_CONGRESS_MEMBER_LIST",
+  Fetch = "FETCH_CONGRESS_MEMBER_LIST",
 }
 
 type CongressMemberPayload = {
-  [Types.Get]: CongressMember[];
+  [Types.Fetch]: CongressMember[];
 };
 
 export type CongressMemberActions = ActionMap<
@@ -29,7 +29,7 @@ export const congressMemberReducer = (
   action: CongressMemberActions
 ) => {
   switch (action.type) {
-    case types.GET_CONGRESS_MEMBER_LIST:
+    case types.FETCH_CONGRESS_MEMBER_LIST:
       return { ...state, congressMembers: action.payload };
     default:
       return state;
