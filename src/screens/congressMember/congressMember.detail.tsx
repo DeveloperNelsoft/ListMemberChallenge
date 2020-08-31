@@ -9,8 +9,8 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import { CongressMember } from "./congressMember.interface";
-import { AppContext } from "../../state/store";
-import { Types } from "../../state/CongressMemberReducer";
+import { AppContext } from "../../state/customContext";
+import { Types } from "../../state/congressMemberReducer";
 
 interface CongressMemberDetailState {
   CongressMemberList: CongressMember[];

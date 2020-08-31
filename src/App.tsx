@@ -8,7 +8,7 @@ import Footer from "./components/layout/footer";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import { AppProvider } from "./state/store";
+import { AppProvider } from "./state/customContext";
 
 const useStyles = makeStyles((theme) => ({
   text: {

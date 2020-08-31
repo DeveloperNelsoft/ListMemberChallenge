@@ -26,8 +26,8 @@ import Box from "@material-ui/core/Box";
 import ReactLoading from "react-loading";
 
 import { CongressMember } from "./congressMember.interface";
-import { AppContext } from "../../state/store";
-import { Types } from "../../state/CongressMemberReducer";
+import { AppContext } from "../../state/customContext";
+import { Types } from "../../state/congressMemberReducer";
 import getAxios from "../../apiConnector/apiConnector";
 
 interface CongressMemberListState {

@@ -2,7 +2,7 @@ import React, { createContext, useReducer, Dispatch } from "react";
 import {
   congressMemberReducer,
   CongressMemberActions,
-} from "./CongressMemberReducer";
+} from "./congressMemberReducer";
 import { CongressMember } from "../screens/congressMember/congressMember.interface";
 
 type InitialStateType = {
