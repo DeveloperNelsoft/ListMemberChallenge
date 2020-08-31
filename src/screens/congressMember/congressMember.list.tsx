@@ -47,7 +47,6 @@ const CongressMemberList: React.SFC<CongressMemberListState> = () => {
       .get(urlBackend)
       .then((result: any) => result.data)
       .then((responseData: any) => {
-        console.log(responseData.results[0].members);
         dispatch({
           type: Types.Add,
           payload: responseData.results[0].members as CongressMember[],

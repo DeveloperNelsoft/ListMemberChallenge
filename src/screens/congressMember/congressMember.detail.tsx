@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       padding: theme.spacing(2),
       margin: "auto",
-      maxWidth: 500,
+      maxWidth: 800,
     },
     image: {
       width: 128,
@@ -55,23 +55,44 @@ const CongressMemberDetail: React.SFC<Props> = (props: Props) => {
     setCongressMemberId(congressMemberId);
   }, []);
 
-  const configContent = () => {
-    let content = <ReactLoading type="bubbles" color="blue" />;
+  const renderKeyValueInsideGrid = (key: string, value: string) => {
+    return (
+      <div>
+        <Grid item xs={12} sm container>
+          <Grid item xs container direction="column" spacing={2}>
+            <Grid item xs>
+              <Typography gutterBottom variant="subtitle1">
+                {key}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid item>
+            <Typography variant="subtitle1">{value}</Typography>
+          </Grid>
+        </Grid>
+      </div>
+    );
+  };
 
-    // content = {state.congressMembers.congressMembers.map( (value: any, index:number) => {
-    //       <Grid item xs={12} sm container>
-    //         <Grid item xs container direction="column" spacing={2}>
-    //           <Grid item xs>
-    //             <Typography gutterBottom variant="subtitle1">
-    //               {`Standard license id: ${value.id}`}
-    //             </Typography>
-    //           </Grid>
-    //         </Grid>
-    //         <Grid item>
-    //           <Typography variant="subtitle1">$19.00</Typography>
-    //         </Grid>
-    //       </Grid>
-    //     })};
+  const configContent = () => {
+    // let content = <ReactLoading type="bubbles" color="blue" />;
+
+    let content: any[] = [];
+    if (
+      state.congressMembers.congressMembers !== undefined &&
+      congressMemberId.length > 1
+    ) {
+      const congressMember = state.congressMembers.congressMembers.filter(
+        (val: any, index: number) => val.id === congressMemberId
+      )[0];
+
+      const arryKey = Object.keys(congressMember).map((key: any) => [
+        key,
+        congressMember[key],
+      ]);
+
+      content = arryKey;
+    }
 
     return content;
   };
@@ -83,9 +104,19 @@ const CongressMemberDetail: React.SFC<Props> = (props: Props) => {
           {`Congress Member Detail View Id : ${congressMemberId}`}
         </Typography>
         <Paper className={classes.paper}>
-          <Grid container spacing={2}>
-            {configContent()}
-          </Grid>
+          {configContent()
+            .filter((val: any) => val[0] !== "tableData")
+            .map((val: any, index: number) => (
+              <Grid item xs={12} sm container>
+                <Grid item xs container direction="column" spacing={2}>
+                  <strong>{`${val[0]} `}</strong>
+                  <Grid item xs></Grid>
+                </Grid>
+                <Grid item>
+                  <div>{`${val[1] === null ? "No Information" : val[1]}`}</div>
+                </Grid>
+              </Grid>
+            ))}
           <Grid item>
             <Link to="/">
               <Typography variant="subtitle2" gutterBottom>
