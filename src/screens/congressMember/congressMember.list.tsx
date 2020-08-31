@@ -163,6 +163,7 @@ const CongressMemberList: React.SFC<CongressMemberListState> = () => {
               pageSize: 7,
               pageSizeOptions: [21, 70, 700],
               search: true,
+              filtering: true,
             }}
           />
         </Paper>
