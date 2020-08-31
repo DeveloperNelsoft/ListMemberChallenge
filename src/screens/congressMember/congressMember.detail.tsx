@@ -123,12 +123,8 @@ const CongressMemberDetail: React.SFC<Props> = (props: Props) => {
             ))}
         </Paper>
         <Paper className={classes.paperBackButton}>
-          <Button color="secondary">
-            <Link to="/">
-              <Typography variant="subtitle1" gutterBottom>
-                Back to member list
-              </Typography>
-            </Link>
+          <Button variant="outlined" color="secondary">
+            <Link to="/"> Back to member list</Link>
           </Button>
         </Paper>
       </Box>
