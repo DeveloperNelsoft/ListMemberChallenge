@@ -1,7 +1,5 @@
 import React, { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { withRouter, RouteComponentProps, match } from "react-router";
-
 import MaterialTable from "material-table";
 import { forwardRef } from "react";
 import AddBox from "@material-ui/icons/AddBox";
@@ -29,6 +27,7 @@ import { CongressMember } from "./congressMember.interface";
 import { AppContext } from "../../state/customContext";
 import { Types } from "../../state/congressMemberReducer";
 import getAxios from "../../apiConnector/apiConnector";
+import { format } from "date-fns";
 
 interface CongressMemberListState {
   CongressMemberList: CongressMember[];
@@ -120,7 +119,15 @@ const CongressMemberList: React.SFC<CongressMemberListState> = () => {
               { title: "First name", field: "first_name" },
               { title: "Last name", field: "last_name" },
               { title: "Gender", field: "gender" },
-              { title: "Date of birth", field: "date_of_birth" },
+              {
+                title: "Date of birth",
+                field: "date_of_birth",
+                render: (rowData) => (
+                  <div>
+                    {format(new Date(rowData.date_of_birth), "dd/MM/yyyy")}
+                  </div>
+                ),
+              },
               { title: "state", field: "state" },
               { title: "Role", field: "leadership_role" },
               {
@@ -155,7 +162,7 @@ const CongressMemberList: React.SFC<CongressMemberListState> = () => {
             options={{
               pageSize: 7,
               pageSizeOptions: [21, 70, 700],
-              search: false,
+              search: true,
             }}
           />
         </Paper>

@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import CongressMemberList from "./screens/congressMember/congressMember.list";
 import CongressMemberDetail from "./screens/congressMember/congressMember.detail";

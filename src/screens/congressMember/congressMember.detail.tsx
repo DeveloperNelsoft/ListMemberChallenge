@@ -1,16 +1,15 @@
 import React, { useEffect, useState, useContext } from "react";
-import { withRouter, match } from "react-router";
+import { match } from "react-router";
 import { Link } from "react-router-dom";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import ReactLoading from "react-loading";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import { CongressMember } from "./congressMember.interface";
 import { AppContext } from "../../state/customContext";
-import { Types } from "../../state/congressMemberReducer";
+import { Button } from "@material-ui/core";
 
 interface CongressMemberDetailState {
   CongressMemberList: CongressMember[];
@@ -48,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const CongressMemberDetail: React.SFC<Props> = (props: Props) => {
   const classes = useStyles();
   const [congressMemberId, setCongressMemberId] = useState("");
-  const { state, dispatch } = useContext(AppContext);
+  const { state } = useContext(AppContext);
 
   useEffect(() => {
     const { congressMemberId } = props.match.params;
@@ -118,11 +117,13 @@ const CongressMemberDetail: React.SFC<Props> = (props: Props) => {
               </Grid>
             ))}
           <Grid item>
-            <Link to="/">
-              <Typography variant="subtitle2" gutterBottom>
-                Back to member list
-              </Typography>
-            </Link>
+            <Button color="secondary">
+              <Link to="/">
+                <Typography variant="subtitle1" gutterBottom>
+                  Back to member list
+                </Typography>
+              </Link>
+            </Button>
           </Grid>
         </Paper>
       </Box>
