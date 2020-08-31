@@ -31,6 +31,10 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: "auto",
       maxWidth: 800,
     },
+    paperBackButton: {
+      margin: "auto",
+      maxWidth: 800,
+    },
     image: {
       width: 128,
       height: 128,
@@ -99,9 +103,11 @@ const CongressMemberDetail: React.SFC<Props> = (props: Props) => {
   return (
     <Container id="congressList">
       <Box my={12}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          {`Congress Member Detail View Id : ${congressMemberId}`}
-        </Typography>
+        <Paper className={classes.paper}>
+          <Typography variant="h4" component="h1" gutterBottom>
+            {`Member Detail View Id : ${congressMemberId}`}
+          </Typography>
+        </Paper>
         <Paper className={classes.paper}>
           {configContent()
             .filter((val: any) => val[0] !== "tableData")
@@ -115,15 +121,15 @@ const CongressMemberDetail: React.SFC<Props> = (props: Props) => {
                 </Grid>
               </Grid>
             ))}
-          <Grid item>
-            <Button color="secondary">
-              <Link to="/">
-                <Typography variant="subtitle1" gutterBottom>
-                  Back to member list
-                </Typography>
-              </Link>
-            </Button>
-          </Grid>
+        </Paper>
+        <Paper className={classes.paperBackButton}>
+          <Button color="secondary">
+            <Link to="/">
+              <Typography variant="subtitle1" gutterBottom>
+                Back to member list
+              </Typography>
+            </Link>
+          </Button>
         </Paper>
       </Box>
     </Container>
