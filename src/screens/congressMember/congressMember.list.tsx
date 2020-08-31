@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import { withRouter, RouteComponentProps, match } from "react-router";
 
 import MaterialTable from "material-table";
 import { forwardRef } from "react";
@@ -25,40 +26,37 @@ import Box from "@material-ui/core/Box";
 import ReactLoading from "react-loading";
 
 import { CongressMember } from "./congressMember.interface";
-import productReducer from "../../state/CongressMemberReducer";
-import * as types from "../../state/types";
+import { AppContext } from "../../state/store";
+import { Types } from "../../state/CongressMemberReducer";
 import getAxios from "../../apiConnector/apiConnector";
 
-interface CongressMemberTableState {
+interface CongressMemberListState {
   CongressMemberList: CongressMember[];
   loading: Boolean;
 }
 
 interface CongressMemberTableProps {}
 
-const CongressMemberTable: React.SFC<CongressMemberTableState> = (props) => {
-  const [state, dispatch] = productReducer();
-
-  const [currentCongressMemberId, setCurrentCongressMemberId] = useState("");
+const CongressMemberList: React.SFC<CongressMemberListState> = () => {
+  const { state, dispatch } = useContext(AppContext);
 
   useEffect(() => {
-    dispatch({ type: types.LOADING });
-
     const urlBackend = `https://api.propublica.org/congress/v1/116/senate/members.json`;
     getAxios
       .instance("")
       .get(urlBackend)
       .then((result: any) => result.data)
       .then((responseData: any) => {
+        console.log(responseData.results[0].members);
         dispatch({
-          type: types.GET_CONGRESS_MEMBER,
-          data: responseData.results[0].members as CongressMember[],
+          type: Types.Add,
+          payload: responseData.results[0].members as CongressMember[],
         });
       });
   }, []);
 
   const configContent = () => {
-    let content = <ReactLoading type="bubbles" color="#DDD" />;
+    let content = <ReactLoading type="bubbles" color="blue" />;
 
     const tableIcons = {
       Add: forwardRef((props, ref: React.Ref<SVGSVGElement>) => (
@@ -114,7 +112,7 @@ const CongressMemberTable: React.SFC<CongressMemberTableState> = (props) => {
       )),
     };
 
-    if (!state.isLoading) {
+    if (state.congressMembers.congressMembers !== undefined) {
       content = (
         <Paper>
           <MaterialTable
@@ -125,10 +123,18 @@ const CongressMemberTable: React.SFC<CongressMemberTableState> = (props) => {
               { title: "Gender", field: "gender" },
               { title: "Date of birth", field: "date_of_birth" },
               { title: "state", field: "state" },
-              { title: "Leadership role", field: "leadership_role" },
+              { title: "Role", field: "leadership_role" },
+              {
+                title: "Action",
+                render: (rowData) => (
+                  <Link to={`/congressMemberDetail/${rowData.id}`}>
+                    detail view
+                  </Link>
+                ),
+              },
             ]}
             icons={tableIcons}
-            data={state.congressMember}
+            data={state.congressMembers.congressMembers}
             title=""
             localization={{
               body: {
@@ -159,90 +165,16 @@ const CongressMemberTable: React.SFC<CongressMemberTableState> = (props) => {
     return content;
   };
 
-  const addProduct = (event: any) => {
-    const textNewProduct = `newProduct ${state.congressMember.length + 1} `;
-
-    const newProduct = {
-      id: state.product.length + 1,
-      brand: textNewProduct,
-      description: textNewProduct,
-      image: "none",
-      price: `${state.congressMember.length + 1} `,
-    };
-
-    dispatch({ type: types.ADD_CONGRESS_MEMBER, data: newProduct });
-  };
-
-  const udateProduct = (event: any) => {
-    const updatedProduct = `product updated ${currentCongressMemberId} `;
-
-    const updProduct = [
-      ...state.product.map((z: any, i: number) =>
-        i === parseInt(currentCongressMemberId, 10) - 1
-          ? (z = {
-              id: z.id,
-              brand: updatedProduct,
-              description: updatedProduct,
-              image: z.image,
-              price: z.price,
-            })
-          : z
-      ),
-    ];
-
-    dispatch({ type: types.UPDATE_CONGRESS_MEMBER, data: updProduct });
-  };
-
-  const deleteProduct = (event: any) => {
-    const deletProduct = [
-      ...state.product.filter(
-        (x: any, i: number) =>
-          parseInt(x.id, 10) !== parseInt(currentCongressMemberId, 10)
-      ),
-    ];
-
-    dispatch({ type: types.DELETE_CONGRESS_MEMBER, data: deletProduct });
-  };
-
-  const takeProductId = (event: any) => {
-    setCurrentCongressMemberId(event.target.value);
-  };
-
   return (
-    <Container>
-      <Box my={2}>
-        <Link to="/congressMemberGrid">Ver congressMemberGrid</Link>
-      </Box>
+    <Container id="congressList">
       <Box my={12}>
         <Typography variant="h4" component="h1" gutterBottom>
           {`Congress Member List `}
         </Typography>
-        {/* <div>
-          <span>
-            (mini local CRUD over global state using useReducer hooks example )
-            id to edit or delete:{" "}
-          </span>
-          <input value={currentCongressMemberId} onChange={takeProductId} />
-          <span> - </span>
-          <button onClick={(event: any) => addProduct(event)}> ADD </button>
-          <span> - </span>
-          <button onClick={(event: any) => udateProduct(event)}>
-            {" "}
-            UPDATE{" "}
-          </button>
-          <span> - </span>
-          <button onClick={(event: any) => deleteProduct(event)}>
-            {" "}
-            DELETE{" "}
-          </button>
-          <br></br>
-          <br></br>
-        </div> */}
-
         {configContent()}
       </Box>
     </Container>
   );
 };
 
-export default CongressMemberTable;
+export default CongressMemberList;

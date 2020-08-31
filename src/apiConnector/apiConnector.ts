@@ -1,7 +1,7 @@
 import Axios, { AxiosError, AxiosRequestConfig } from "axios";
 
 // Dev mode in localhost and port.
-const BACK_END_URL = "https://www.getonbrd.com";
+const BACK_END_URL = "";
 const LOG_AXIOS = false;
 
 const getAxios = {
